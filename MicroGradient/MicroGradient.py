@@ -27,6 +27,7 @@ class player():
         self.cooldown = 0
         self.lives = 3
         self.flicker = 0
+        self.autofire = False
         
     def input(self):
         if self.cooldown > 0:
@@ -39,7 +40,9 @@ class player():
             self.sprite.y -= 1
         if thumby.buttonD.pressed() and self.sprite.y < 33:
             self.sprite.y += 1
-        if thumby.buttonA.pressed() and self.cooldown == 0:
+        if thumby.buttonA.justPressed():
+            self.autofire = not self.autofire
+        if self.autofire and self.cooldown == 0:
             player_shots.append(fire(self.sprite.x+8,self.sprite.y+3))
             self.cooldown += 12
             
